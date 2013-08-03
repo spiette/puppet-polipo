@@ -26,7 +26,9 @@
 #
 # Copyright 2013 Simon Piette
 #
-class polipo () {
+class polipo (
+  $options = {}
+  ) {
   anchor { "${module_name}::begin": } ->
   class {"${module_name}::install": } ->
   class {"${module_name}::config": } ~>

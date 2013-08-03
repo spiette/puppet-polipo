@@ -22,5 +22,19 @@ describe 'polipo' do
         .with_content(/^daemonise = true$/) }
       end
     end
+    describe "class with options parameters on #{osfamily}" do
+      let(:params) {{
+        :options => {
+          'proxyAddress'   => '0.0.0.0',
+          'allowedClients' => '127/8, 192.168.122.0/24'
+        }
+      }}
+      let(:facts) { { :osfamily => osfamily } }
+      it {
+        should create_file('/etc/polipo/config')\
+        .with_content(/^proxyAddress = 0.0.0.0$/)\
+        .with_content(/^allowedClients = 127.8, 192.168.122.0.24$/)
+      }
+    end
   end
 end

@@ -1,4 +1,5 @@
 # Sample configuration file for Polipo. -*-sh-*-
+# THIS FILE IS MANAGED BY PUPPET
 
 # You should not need to use a configuration file; all configuration
 # variables have reasonable defaults.  If you want to use one, you
@@ -157,3 +158,9 @@ logFile = /var/log/polipo/polipo.log
 # Vary header (this is not a good idea):
 
 # mindlesslyCacheVary = true
+
+# puppet assigned configuration
+<% @options.keys.sort.each do |key| %>
+<%= key %> = <%= @options[key] -%>
+<% end %>
+# THIS FILE IS MANAGED BY PUPPET
