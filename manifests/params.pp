@@ -7,4 +7,9 @@ class polipo::params {
   $conffile = $::osfamily ? {
     default  => '/etc/polipo/config',
   }
+  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease < 7 {
+    $logfile = '/var/log/polipo'
+  } else {
+    $logfile = '/var/log/polipo/polipo.log'
+  }
 }

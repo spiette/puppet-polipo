@@ -3,10 +3,22 @@ require 'spec_helper'
 describe 'polipo' do
   let(:title) { 'polipo' }
 
+  describe "class without any parameters on RedHat < 7" do
+    let(:params) {{ }}
+    let(:facts) { {
+      :osfamily => 'RedHat',
+      :operatingsystemmajrelease => '6'
+    } }
+    it { should create_file('/etc/polipo/config')\
+      .with_content(/^logFile = .var.log.polipo$/) }
+  end
   ['Debian', 'RedHat'].each do |osfamily|
-    describe "class without any parameters on #{osfamily}" do 
+    describe "class without any parameters on #{osfamily}" do
       let(:params) {{ }}
-      let(:facts) { { :osfamily => osfamily } }
+      let(:facts) { {
+        :osfamily => osfamily,
+        :operatingsystemmajrelease => '7'
+      } }
 
       it { should create_class('polipo') }
       it { should create_package('polipo') }
@@ -19,7 +31,8 @@ describe 'polipo' do
       it { should create_service('polipo') }
       if osfamily == 'RedHat' 
         it { should create_file('/etc/polipo/config')\
-        .with_content(/^daemonise = true$/) }
+        .with_content(/^daemonise = true$/)\
+        .with_content(/^logFile = .var.log.polipo.polipo.log/) }
       end
     end
     describe "class with options parameters on #{osfamily}" do
@@ -29,7 +42,10 @@ describe 'polipo' do
           'allowedClients' => '127/8, 192.168.122.0/24'
         }
       }}
-      let(:facts) { { :osfamily => osfamily } }
+      let(:facts) { {
+        :osfamily => osfamily,
+        :operatingsystemmajrelease => '7'
+      } }
       it {
         should create_file('/etc/polipo/config')\
         .with_content(/^proxyAddress = 0.0.0.0$/)\

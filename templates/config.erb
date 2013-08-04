@@ -13,7 +13,7 @@
 ### *****************************
 daemonise = true
 pidFile = /var/run/polipo/polipo.pid
-logFile = /var/log/polipo/polipo.log
+logFile = <%= scope.lookupvar('polipo::params::logfile') %>
 <% end %>
 
 ### Basic configuration
