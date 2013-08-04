@@ -6,4 +6,11 @@ class polipo::install {
   package { $polipo::params::pkgname:
     ensure => present,
   }
+  file { '/var/log/polipo':
+    ensure  => directory,
+    owner   => 'polipo',
+    group   => 'polipo',
+    mode    => '0750',
+    require => Package[$polipo::params::pkgname],
+  }
 }
