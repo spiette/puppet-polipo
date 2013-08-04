@@ -1,5 +1,5 @@
 name    'spiette-polipo'
-version '0.0.1'
+version '0.2.0'
 source 'https://github.com/spiette/puppet-polipo'
 author 'spiette'
 license 'Apache License, Version 2.0'
