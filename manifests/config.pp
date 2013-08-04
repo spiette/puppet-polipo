@@ -20,8 +20,8 @@ class polipo::config(
   include polipo::params
   file { $polipo::params::conffile:
     ensure  => present,
-    owner   => 'polipo',
-    group   => 'polipo',
+    owner   => 'root',
+    group   => $polipo::params::group,
     mode    => '0440',
     content => template('polipo/config.erb')
   }

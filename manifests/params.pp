@@ -12,4 +12,9 @@ class polipo::params {
   } else {
     $logfile = '/var/log/polipo/polipo.log'
   }
+  $group = $::osfamily ? {
+    'Debian' => 'proxy',
+    'RedHat' => 'polipo',
+    default  => 'nobody',
+  }
 }

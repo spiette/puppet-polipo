@@ -19,12 +19,20 @@ describe 'polipo' do
         :osfamily => osfamily,
         :operatingsystemmajrelease => '7'
       } }
+      case osfamily
+      when 'Debian'
+        group = 'proxy'
+      when 'RedHat'
+        group = 'polipo'
+      end
 
       it { should create_class('polipo') }
       it { should create_package('polipo') }
-      it { should create_file('/etc/polipo/config') }
-      it {
-        should create_file('/etc/polipo/config')\
+      it { should create_file('/etc/polipo/config')\
+        .with_mode('0440')\
+        .with_group(group)
+      }
+      it { should create_file('/etc/polipo/config')\
         .with_content(/proxyAddress/)\
         .with_content(/allowedClients/)
       }
