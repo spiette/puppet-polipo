@@ -22,8 +22,10 @@ describe 'polipo' do
       case osfamily
       when 'Debian'
         group = 'proxy'
+        hasstatus = false
       when 'RedHat'
         group = 'polipo'
+        hasstatus = true
       end
 
       it { should create_class('polipo') }
@@ -36,7 +38,8 @@ describe 'polipo' do
         .with_content(/proxyAddress/)\
         .with_content(/allowedClients/)
       }
-      it { should create_service('polipo') }
+      it { should create_service('polipo')\
+        .with_hasstatus(hasstatus) }
       if osfamily == 'RedHat' 
         it { should create_file('/etc/polipo/config')\
         .with_content(/^daemonise = true$/)\

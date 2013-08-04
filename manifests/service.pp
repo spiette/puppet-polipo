@@ -4,7 +4,8 @@
 class polipo::service {
   include polipo::params
   service { $polipo::params::service:
-    ensure => running,
-    enable => true,
+    ensure    => running,
+    enable    => true,
+    hasstatus => $polipo::params::hasstatus,
   }
 }

@@ -17,4 +17,9 @@ class polipo::params {
     'RedHat' => 'polipo',
     default  => 'nobody',
   }
+  $hasstatus = $::osfamily ? {
+    'Debian' => false,
+    'RedHat' => true,
+    default  => false,
+  }
 }
